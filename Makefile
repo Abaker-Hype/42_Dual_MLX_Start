@@ -5,11 +5,11 @@ INC := ./includes/
 SRCDIR := ./src/
 OBJDIR := ./obj/
 LIBS :=
-CC := GCC
+CC := gcc
 FLAGS := -Wall -Werror -Wextra -I$(INC) $(LIBS)
 
 #Objects
-SRC := $(wildcard $(SRCDIR)/*.c)
+SRC := $(wildcard $(SRCDIR)*.c)
 OBJ := $(addprefix $(OBJDIR),$(notdir $(SRC:.c=.o)))
 
 #OS Specifics/MLX
@@ -37,13 +37,13 @@ FLAGS += -I$(MLXDIR)
 all: $(NAME)
 
 $(NAME): $(MLX) $(OBJ)
-	$(CC) $(FLAGS) $(MLXFLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(OBJ) $(FLAGS) $(MLXFLAGS) -o $(NAME)
 
 $(MLX):
 	@make -C $(MLXDIR)
 
 $(OBJDIR)%.o:$(SRCDIR)%.c | $(OBJDIR)
-	@$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $(OBJDIR)
